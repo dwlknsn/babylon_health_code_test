@@ -20,18 +20,36 @@ describe 'Integration' do
 
   context 'with promotions' do
     context 'total_order promotion' do
-      it 'applies the discount to the total order' do
-        rule = PromotionalRule.new(type: :total_order, percent: 10)
-        promotional_rules = [rule]
-        co = Checkout.new(promotional_rules)
-        item_1 = build_item(product_code: '001')
-        item_2 = build_item(product_code: '002')
-        item_3 = build_item(product_code: '003')
-        co.scan(item_1)
-        co.scan(item_2)
-        co.scan(item_3)
+      context 'min_spend_limit exceeded' do
+        it 'applies the discount to the total order' do
+          rule = PromotionalRule.new(type: :total_order, percent: 10)
+          promotional_rules = [rule]
+          co = Checkout.new(promotional_rules)
+          item_1 = build_item(product_code: '001')
+          item_2 = build_item(product_code: '002')
+          item_3 = build_item(product_code: '003')
+          co.scan(item_1)
+          co.scan(item_2)
+          co.scan(item_3)
 
-        expect(co.total).to eq(66.78)
+          expect(co.total).to eq(66.78)
+        end
+      end
+
+      context 'min_spend_limit NOT exceeded' do
+        it 'does not apply discount' do
+          rule = PromotionalRule.new(type: :total_order, percent: 10, min_spend_limit: 100.00)
+          promotional_rules = [rule]
+          co = Checkout.new(promotional_rules)
+          item_1 = build_item(product_code: '001')
+          item_2 = build_item(product_code: '002')
+          item_3 = build_item(product_code: '003')
+          co.scan(item_1)
+          co.scan(item_2)
+          co.scan(item_3)
+
+          expect(co.total).to eq(74.20)
+        end
       end
     end
   end

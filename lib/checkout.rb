@@ -13,7 +13,7 @@ class Checkout
   def total
     subtotal = basket.map(&:price).inject(:+)
     @promotional_rules.each do |rule|
-      subtotal *= (100 - rule.percent) / 100
+      subtotal *= (100 - rule.percent) / 100 if subtotal >= rule.min_spend_limit
     end
     subtotal
   end

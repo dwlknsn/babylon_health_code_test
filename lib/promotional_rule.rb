@@ -1,8 +1,9 @@
 class PromotionalRule
-  attr_reader :percent
+  attr_reader :percent, :min_spend_limit
 
-  def initialize(type:, percent:)
+  def initialize(type:, percent: 0.00, min_spend_limit: 0.00)
     @type = type
-    @percent = percent.to_f || 0.00
+    @percent = percent.to_f
+    @min_spend_limit = min_spend_limit.to_f
   end
 end
