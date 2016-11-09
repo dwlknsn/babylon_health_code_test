@@ -7,6 +7,7 @@ describe Checkout do
       co = Checkout.new
       item_1 = double(:item)
       item_2 = double(:item)
+
       co.scan(item_1)
       co.scan(item_2)
 
@@ -19,6 +20,7 @@ describe Checkout do
       co = Checkout.new
       item_1 = double(:item, price: 5.00)
       item_2 = double(:item, price: 10.00)
+
       co.scan(item_1)
       co.scan(item_2)
 
@@ -33,6 +35,7 @@ describe Checkout do
       item_2 = double(:item)
       co.scan(item_1)
       co.scan(item_2)
+
       co.remove(item_1)
 
       expect(co.basket).to eq([item_2])
@@ -46,6 +49,7 @@ describe Checkout do
       item_2 = double(:item)
       co.scan(item_1)
       co.scan(item_2)
+
       co.clear
 
       expect(co.basket).to eq([])
