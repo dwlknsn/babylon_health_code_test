@@ -1,10 +1,26 @@
-The Test
+## Solution for Babylon Health Code Challenge
+
+###Dependencies:
+
+- ruby 2.3.1p112
+- rspec ~> 3.5
+
+###Instructions:
+
+- `git clone git@github.com:dwlknsn/babylon_health_code_test.git`
+- `cd babylon_health_code_test`
+- use `rspec` to run the full test suite including the example scenarios below
+
+===
+
+###The Test
 Our client is an online marketplace, here is a sample of some of the products available on our site:
-Product code  | Name                   | Price
-----------------------------------------------------------
-001           | Lavender heart         | £9.25
-002           | Personalised cufflinks | £45.00
-003           | Kids T-shirt           | £19.95
+
+|Product code  | Name                   | Price |
+|:-------------|:-------------          | -----:|
+|001           | Lavender heart         | £9.25 |
+|002           | Personalised cufflinks | £45.00|
+|003           | Kids T-shirt           | £19.95|
 
 
 Our marketing team want to offer promotions as an incentive for our customers to purchase these items.
@@ -20,14 +36,14 @@ price = co.total
 
 Implement a checkout system that fulfills these requirements. Do this outside of any frameworks. We’re looking for candidates to demonstrate their knowledge of TDD.
 
+===
 
-Test data
----------
-Basket: 001,002,003
-Total price expected: £66.78
+###Test data
+Basket: 001,002,003  
+=> Total price expected: £66.78
 
-Basket: 001,003,001
-Total price expected: £36.95
+Basket: 001,003,001  
+=> Total price expected: £36.95
 
-Basket: 001,002,001,003
-Total price expected: £73.76
+Basket: 001,002,001,003  
+=> Total price expected: £73.76
