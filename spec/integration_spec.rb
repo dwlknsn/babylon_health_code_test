@@ -63,9 +63,7 @@ describe 'Integration' do
           co.scan(build_item(product_code: '003'))
           co.scan(build_item(product_code: '001'))
 
-          price = co.total
-
-          expect(price).to eq(36.95)
+          expect(co.total).to eq(36.95)
         end
       end
 
@@ -78,10 +76,25 @@ describe 'Integration' do
           co.scan(build_item(product_code: '003'))
           co.scan(build_item(product_code: '001'))
 
-          price = co.total
-
-          expect(price).to eq(38.45)
+          expect(co.total).to eq(38.45)
         end
+      end
+    end
+  end
+
+  context 'with multiple promotional_rules' do
+    context 'product and total_order promotions' do
+      it 'reduces the product price by the amount specified' do
+        rule_1 = PromotionalRule.new(type: :total_order, percent: 10)
+        rule_2 = PromotionalRule.new(type: :product, discount: 0.75, product_code: '001')
+        promotional_rules = [rule_1, rule_2]
+        co = Checkout.new(promotional_rules)
+        co.scan(build_item(product_code: '001'))
+        co.scan(build_item(product_code: '002'))
+        co.scan(build_item(product_code: '001'))
+        co.scan(build_item(product_code: '003'))
+
+        expect(co.total).to eq(73.76)
       end
     end
   end
