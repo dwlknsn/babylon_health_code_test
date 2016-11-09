@@ -10,6 +10,14 @@ class Checkout
     basket << item
   end
 
+  def remove(item)
+    basket.delete(item)
+  end
+
+  def clear
+    basket.clear
+  end
+
   def total
     apply_product_promotions
     apply_total_order_promotions
