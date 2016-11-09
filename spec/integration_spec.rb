@@ -52,6 +52,38 @@ describe 'Integration' do
         end
       end
     end
+
+    context 'product promotion' do
+      context 'min_quantity_limit exceeded' do
+        it 'reduces the product price by the amount specified' do
+          rule = PromotionalRule.new(type: :product, discount: 0.75, product_code: '001', min_quantity_limit: 2)
+          promotional_rules = [rule]
+          co = Checkout.new(promotional_rules)
+          co.scan(build_item(product_code: '001'))
+          co.scan(build_item(product_code: '003'))
+          co.scan(build_item(product_code: '001'))
+
+          price = co.total
+
+          expect(price).to eq(36.95)
+        end
+      end
+
+      context 'min_quantity_limit NOT exceeded' do
+        it 'does not reduce the product price' do
+          rule = PromotionalRule.new(type: :product, discount: 0.75, product_code: '001', min_quantity_limit: 3)
+          promotional_rules = [rule]
+          co = Checkout.new(promotional_rules)
+          co.scan(build_item(product_code: '001'))
+          co.scan(build_item(product_code: '003'))
+          co.scan(build_item(product_code: '001'))
+
+          price = co.total
+
+          expect(price).to eq(38.45)
+        end
+      end
+    end
   end
 end
 
